@@ -1,4 +1,5 @@
 import sys
+import time
 
 import vk
 
@@ -40,7 +41,9 @@ def output_friends_to_console(online_friends_id_list):
     print('VK online friends list: ')
     for online_friend_id in online_friends_id_list:
         friend_info = get_friend_info(online_friend_id)
-        print('\t' + friend_info[0]['first_name'], friend_info[0]['last_name'] + ' https://vk.com/id' + str(online_friend_id))
+        print('\t' + friend_info[0]['first_name'],
+              friend_info[0]['last_name'] + ' https://vk.com/id' + str(online_friend_id))
+        time.sleep(.21)  # Api restrictions 5 requests per second
 
 
 if __name__ == '__main__':
