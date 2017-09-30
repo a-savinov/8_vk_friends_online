@@ -4,7 +4,7 @@ import time
 import vk
 
 APP_ID = 6202412  # чтобы получить app_id, нужно зарегистрировать своё приложение на https://vk.com/dev
-
+API_TIMEOUT = .3
 
 def get_user_login():
     vk_login = sys.argv[1]
@@ -43,7 +43,7 @@ def output_friends_to_console(online_friends_id_list):
         friend_info = get_friend_info(online_friend_id)
         print('\t' + friend_info[0]['first_name'],
               friend_info[0]['last_name'] + ' https://vk.com/id' + str(online_friend_id))
-        time.sleep(.21)  # Api restrictions 5 requests per second
+        time.sleep(API_TIMEOUT)  # Api restrictions 5 requests per second
 
 
 if __name__ == '__main__':
