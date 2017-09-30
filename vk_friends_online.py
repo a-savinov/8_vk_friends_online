@@ -20,28 +20,27 @@ def get_vk_session(login, password):
         app_id=APP_ID,
         user_login=login,
         user_password=password,
+        scope='friends',
     )
     api_session = vk.API(session)
     return api_session
 
 
-def get_friends_list(vk_session):
-    friends_list = vk_session.friends.get(fields='online')
+def get_online_friends_list(vk_session):
+    friends_list = vk_session.friends.getOnline()
     return friends_list
 
 
-def get_online_friends(friends_list):
-    online_friends_list = [
-        [friend['online'], friend['first_name'], friend['last_name']]
-        for friend in friends_list if friend['online'] == 1
-    ]
-    return online_friends_list
+def get_friend_info(user_id):
+    friend_info = vk_session.users.get(user_id=user_id)
+    return friend_info
 
 
-def output_friends_to_console(friends_online):
+def output_friends_to_console(online_friends_id_list):
     print('VK online friends list: ')
-    for friend in friends_online:
-        print('\t' + friend[1], friend[2])
+    for online_friend_id in online_friends_id_list:
+        friend_info = get_friend_info(online_friend_id)
+        print('\t' + friend_info[0]['first_name'], friend_info[0]['last_name'] + ' https://vk.com/id' + str(online_friend_id))
 
 
 if __name__ == '__main__':
@@ -49,7 +48,7 @@ if __name__ == '__main__':
         login = get_user_login()
         password = get_user_password()
         vk_session = get_vk_session(login, password)
-        friends_online = get_online_friends(get_friends_list(vk_session))
+        friends_online = get_online_friends_list(vk_session)
         output_friends_to_console(friends_online)
     else:
         print('Please define your VK login and password \nExample: vk_friends_online.py <login> <password>')

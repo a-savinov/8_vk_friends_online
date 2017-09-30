@@ -26,17 +26,10 @@ all names are not real
 
 python vk_friends_online.py example@example.com very_hard_password
 Online friends list:
-    Lucas Black
-    Benjamin Kaur
-    Oscar Hamilton
-    Harry Matthews
-    Oscar Perry
-    Jake Mullins
-    Kamron Jordan
-    Aydan Brock
-    Dallas Yates
-    Mack Hahn
-
+    Lucas Black  https://vk.com/idXXXXXXXX
+    Benjamin Kaur https://vk.com/idXXXXXXXX
+    Oscar Hamilton https://vk.com/idXXXXXXXX
+    Harry Matthews https://vk.com/idXXXXXXXX 
 ```
 
 # Project Goals
