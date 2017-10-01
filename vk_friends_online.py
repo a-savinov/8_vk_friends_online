@@ -36,9 +36,7 @@ def get_friends_info(online_friends_id_list):
     return online_friends_info
 
 
-def output_online_friends_to_console(online_friends_info):
-    print('VK online friends list: ')
-    for online_friend_info in online_friends_info:
+def output_online_friend_to_console(online_friend_info):
         print('\t %s %s https://vk.com/id%s' % (online_friend_info['first_name'],
                                                 online_friend_info['last_name'],
                                                 online_friend_info['uid'])
@@ -52,6 +50,8 @@ if __name__ == '__main__':
         vk_session = get_vk_session(login, password)
         friends_online = get_online_friends_id_list(vk_session)
         online_friends_info = get_friends_info(friends_online)
-        output_online_friends_to_console(online_friends_info)
+        print('VK online friends list:')
+        for online_friend_info in online_friends_info:
+            output_online_friend_to_console(online_friend_info)
     else:
         print('Please define your VK login and password \nExample: vk_friends_online.py <login> <password>')
