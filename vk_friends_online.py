@@ -4,7 +4,6 @@ import time
 import vk
 
 APP_ID = 6202412  # чтобы получить app_id, нужно зарегистрировать своё приложение на https://vk.com/dev
-API_TIMEOUT = .3
 
 
 def get_user_login():
@@ -33,18 +32,16 @@ def get_online_friends_id_list(vk_session):
     return online_friends_id_list
 
 
-def get_friend_info(user_id):
-    friend_info = vk_session.users.get(user_id=user_id)
-    return friend_info
+def get_friends_info(online_friends_id_list):
+    online_friends_info = vk_session.users.get(user_ids=online_friends_id_list)
+    return online_friends_info
 
 
-def output_online_friends_to_console(online_friends_id_list):
+def output_online_friends_to_console(online_friends_info):
     print('VK online friends list: ')
-    for online_friend_id in online_friends_id_list:
-        friend_info = get_friend_info(online_friend_id)
-        print('\t' + friend_info[0]['first_name'],
-              friend_info[0]['last_name'] + ' https://vk.com/id' + str(online_friend_id))
-        time.sleep(API_TIMEOUT)  # Api restrictions 5 requests per second
+    for online_friend_info in online_friends_info:
+        print('\t' + online_friend_info['first_name'],
+              online_friend_info['last_name'] + ' https://vk.com/id' + str(online_friend_info['uid']))
 
 
 if __name__ == '__main__':
@@ -53,6 +50,7 @@ if __name__ == '__main__':
         password = get_user_password()
         vk_session = get_vk_session(login, password)
         friends_online = get_online_friends_id_list(vk_session)
-        output_online_friends_to_console(friends_online)
+        online_friends_info = get_friends_info(friends_online)
+        output_online_friends_to_console(online_friends_info)
     else:
         print('Please define your VK login and password \nExample: vk_friends_online.py <login> <password>')
