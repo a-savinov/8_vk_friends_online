@@ -1,5 +1,4 @@
 import sys
-import time
 
 import vk
 
@@ -40,8 +39,10 @@ def get_friends_info(online_friends_id_list):
 def output_online_friends_to_console(online_friends_info):
     print('VK online friends list: ')
     for online_friend_info in online_friends_info:
-        print('\t' + online_friend_info['first_name'],
-              online_friend_info['last_name'] + ' https://vk.com/id' + str(online_friend_info['uid']))
+        print('\t %s %s https://vk.com/id%s' % (online_friend_info['first_name'],
+                                                online_friend_info['last_name'],
+                                                online_friend_info['uid'])
+              )
 
 
 if __name__ == '__main__':
