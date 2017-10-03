@@ -1,6 +1,6 @@
 # Watcher of Friends Online
 
-Shows which of your friends are online now
+Shows which of your friends are online now in VK
 
 # How to Install
 
@@ -15,16 +15,37 @@ Remember, it is recommended to use [virtualenv/venv](https://devman.org/encyclop
 # How to use
 
 ```bash
-python vk_friends_online.py <vk_login> <vk_password>
+$ python vk_friends_online.py -h
+usage: vk_friends_online.py [-h] [-p PASSWORD] -l LOGIN
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -p PASSWORD, --password PASSWORD
+                        User password for VK (optional)
+  -l LOGIN, --login LOGIN
+                        User login for VK
 ```
 
 ## Output example
 
 all names are not real
 
+**recommended**
 ```bash
 
-python vk_friends_online.py example@example.com very_hard_password
+python vk_friends_online.py -l example@example.com
+Enter your VK password:
+VK Online friends list:
+    Lucas Black  https://vk.com/idXXXXXXXX
+    Benjamin Kaur https://vk.com/idXXXXXXXX
+    Oscar Hamilton https://vk.com/idXXXXXXXX
+    Harry Matthews https://vk.com/idXXXXXXXX 
+```
+**or (not recommended**)
+
+```bash
+
+python vk_friends_online.py -l example@example.com -p very_hard_password
 Online friends list:
     Lucas Black  https://vk.com/idXXXXXXXX
     Benjamin Kaur https://vk.com/idXXXXXXXX

@@ -1,17 +1,21 @@
-import sys
+import argparse
+import getpass
 
 import vk
 
-APP_ID = 6202412  # чтобы получить app_id, нужно зарегистрировать своё приложение на https://vk.com/dev
+APP_ID = 6202412  # you can get APP_ID on https://vk.com/dev
 
 
-def get_user_login():
-    vk_login = sys.argv[1]
+def get_user_login(namespace):
+    vk_login = namespace.login
     return vk_login
 
 
-def get_user_password():
-    vk_password = sys.argv[2]
+def get_user_password(namespace):
+    if not namespace.password:
+        vk_password = getpass.getpass(prompt='Enter your VK password: ')
+    else:
+        vk_password = namespace.password
     return vk_password
 
 
@@ -37,21 +41,28 @@ def get_friends_info(online_friends_id_list):
 
 
 def output_online_friend_to_console(online_friend_info):
-        print('\t %s %s https://vk.com/id%s' % (online_friend_info['first_name'],
-                                                online_friend_info['last_name'],
-                                                online_friend_info['uid'])
-              )
+    print('\t{} {} https://vk.com/id{}'.format(online_friend_info['first_name'],
+                                             online_friend_info['last_name'],
+                                             online_friend_info['uid']))
+
+
+def input_argument_parser():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-p', '--password', required=False,
+                        help='User password for VK (optional)')
+    parser.add_argument('-l', '--login', required=True,
+                        help='User login for VK')
+    return parser
 
 
 if __name__ == '__main__':
-    if len(sys.argv) == 3:
-        login = get_user_login()
-        password = get_user_password()
-        vk_session = get_vk_session(login, password)
-        friends_online = get_online_friends_id_list(vk_session)
-        online_friends_info = get_friends_info(friends_online)
-        print('VK online friends list:')
-        for online_friend_info in online_friends_info:
-            output_online_friend_to_console(online_friend_info)
-    else:
-        print('Please define your VK login and password \nExample: vk_friends_online.py <login> <password>')
+    parser = input_argument_parser()
+    namespace = parser.parse_args()
+    login = get_user_login(namespace)
+    password = get_user_password(namespace)
+    vk_session = get_vk_session(login, password)
+    friends_online = get_online_friends_id_list(vk_session)
+    online_friends_info = get_friends_info(friends_online)
+    print('VK online friends list:')
+    for online_friend_info in online_friends_info:
+        output_online_friend_to_console(online_friend_info)
