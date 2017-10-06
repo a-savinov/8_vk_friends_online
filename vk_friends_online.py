@@ -18,9 +18,12 @@ def get_vk_session(login, password):
 
 
 def output_online_friend_to_console(online_friend_info):
-    print('\t{} {} https://vk.com/id{}'.format(online_friend_info['first_name'],
-                                               online_friend_info['last_name'],
-                                               online_friend_info['uid']))
+    print('\t{} {} https://vk.com/id{}'.format(
+                                            online_friend_info['first_name'],
+                                            online_friend_info['last_name'],
+                                            online_friend_info['uid']
+                                              )
+          )
 
 
 def get_input_argument_parser():
@@ -34,12 +37,12 @@ def get_input_argument_parser():
 
 if __name__ == '__main__':
     parser = get_input_argument_parser()
-    namespace = parser.parse_args()
-    login = namespace.login
-    if not namespace.password:
+    args = parser.parse_args()
+    login = args.login
+    if not args.password:
         password = getpass.getpass(prompt='Enter your VK password: ')
     else:
-        password = namespace.password
+        password = args.password
     vk_session = get_vk_session(login, password)
     online_friends_id_list = vk_session.friends.getOnline()
     online_friends_info = vk_session.users.get(user_ids=online_friends_id_list)
